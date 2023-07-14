@@ -1,0 +1,7 @@
+name: KaggluPunishment
+main: me.kagglu.kagglupunishment.KaggluPunishment
+version: 1.0
+author: kagglu
+commands:
+  warn:
+    description: display the warns of a user
