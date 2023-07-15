@@ -42,6 +42,9 @@ public class KaggluPunishment extends Plugin {
 
         getProxy().getPluginManager().registerListener(this, new Events());
         getProxy().getPluginManager().registerCommand(this, new Warns());
+        getProxy().getPluginManager().registerCommand(this, new Warn());
+        getProxy().getPluginManager().registerCommand(this, new Delwarn());
+        getProxy().getPluginManager().registerCommand(this, new kpReload());
 
         getLogger().info("LOADED: KAGGLUPUNISHMENT-BUNGEE");
     }
@@ -54,5 +57,13 @@ public class KaggluPunishment extends Plugin {
 
     public static KaggluPunishment getInstance() {
         return instance;
+    }
+
+    public void reload() {
+        if (configuration.get("database_name") == null) {
+            getLogger().info("KAGGLUPUNISHMENT-BUNGEE: ENTER DATABASE INFO IN CONFIG AND RELOAD PLUGIN");
+        } else {
+            database = new Database(configuration.getString("database_host"), configuration.getInt("database_port"), configuration.getString("database_user"), configuration.getString("database_pass"), configuration.getString("database_name"));
+        }
     }
 }

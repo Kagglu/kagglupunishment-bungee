@@ -3,5 +3,33 @@ main: me.kagglu.kagglupunishment.KaggluPunishment
 version: 1.0
 author: kagglu
 commands:
+  delwarn:
+    description: delete a user's warn
+    permission: kagglupunishment.managewarns
+  kpreload:
+    description: reloads plugin, attempts to connect to database with config info
+    permission: kagglupunishment.reload
   warn:
+    description: warn a user
+    permission: kagglupunishment.managewarns
+  warns:
     description: display the warns of a user
+    aliases:
+      - warnings
+permissions:
+  kagglupunishment.managewarns:
+    description: allows managing warns (/warn and /delwarn)
+    default: op
+  kagglupunishment.viewwarns:
+    description: allows viewing of other players' warns
+    default: op
+  kagglupunishment.reload:
+    description: allows reloading of kagglupunishment
+    default: op
+  kagglupunishment.*:
+    description: kagglupunishment wildcard
+    default: op
+    children:
+      kagglupunishment.managewarns: true
+      kagglupunishment.viewwarns: true
+      kagglupunishment.reload: true
