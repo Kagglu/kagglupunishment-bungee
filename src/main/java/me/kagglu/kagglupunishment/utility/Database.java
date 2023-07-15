@@ -55,13 +55,18 @@ public class Database {
             PreparedStatement selectStatement = connection.prepareStatement("SELECT username FROM Uuid_lookup WHERE uid=?;");
             selectStatement.setString(1, uuid);
             ResultSet selectResultSet = selectStatement.executeQuery();
-            if (!selectResultSet.next()) {
+            if (!selectResultSet.next()) { // insert new player into database
                 PreparedStatement insertStatement = connection.prepareStatement("INSERT INTO Uuid_lookup VALUES(?, ?);");
                 insertStatement.setString(1, username);
                 insertStatement.setString(2, uuid);
                 insertStatement.execute();
-            } else {
-                KaggluPunishment.getInstance().getProxy().getLogger().info("existed already: " + selectResultSet.getString("username"));
+            } else { // update username of player who changed name
+                if (!selectResultSet.getString(1).equalsIgnoreCase(username)) {
+                    PreparedStatement updateStatement = connection.prepareStatement("UPDATE Uuid_lookup SET username=? WHERE uid=?;");
+                    updateStatement.setString(1, username);
+                    updateStatement.setString(2, uuid);
+                    updateStatement.execute();
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
